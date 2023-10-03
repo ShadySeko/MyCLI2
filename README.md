@@ -17,7 +17,7 @@ provided if you have maven installed.
 
 This will create a .jar file, which you can then run with the following command: 
 ```
-java -jar target/untitled-1.0-SNAPSHOT.jar -i <input_file_path> -o <output_file_path> -ie
+java -jar target/ReverseWords.jar -i <input_file_path> -o <output_file_path> -ie
  <input_encoding> -oe <output_encoding>
 ```
 
