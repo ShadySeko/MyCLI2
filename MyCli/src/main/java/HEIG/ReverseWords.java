@@ -35,8 +35,6 @@ public class ReverseWords implements Callable<Integer> {
     private String outputEncoding = "UTF-8";
 
 
-    //This method reverses the words of an input file and writes the output to an output file.
-    //It is called when the command is executed.
 
     /**
      * Overriding the call method of the Callable interface, here we
