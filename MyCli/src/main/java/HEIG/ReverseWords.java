@@ -18,10 +18,14 @@ import java.util.concurrent.Callable;
 
 public class ReverseWords implements Callable<Integer> {
 
+    /**
+     * HERE COMES THE OPTIONS BLOCK
+     */
+
     @Option(names = {"-i"}, description = "Input file path", required = true)
     private File inputFile;
 
-    @Option(names = {"-o"}, description = "Output file path", required = true)
+    @Option(names = {"-o"}, description = "Output file path", required = false)
     private File outputFile;
 
     @Option(names = {"-ie"}, description = "Input file encoding, default UTF-8")
@@ -52,7 +56,7 @@ public class ReverseWords implements Callable<Integer> {
         }
 
         //If there is a valid input file:
-        if(inputFile != null) {
+        if(inputFile.exists()) {
             //Read the input file using a BufferedReader and FileReader
             BufferedReader reader = new BufferedReader(new FileReader(inputFile, Charset.forName(inputEncoding)));
             //Read the input file line by line
@@ -76,7 +80,7 @@ public class ReverseWords implements Callable<Integer> {
 
         //Write the output to the output file using a buffered writer
         //If there is a valid output file:
-        if(outputFile != null) {
+        if(outputFile.exists()) {
             BufferedWriter writer = new BufferedWriter(new FileWriter(outputFile, Charset.forName(outputEncoding)));
             writer.write(output);
             writer.close();
