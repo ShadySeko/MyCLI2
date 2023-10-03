@@ -9,6 +9,7 @@ import java.io.*;
 import java.math.BigInteger;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
+import java.nio.file.StandardOpenOption;
 import java.security.MessageDigest;
 import java.util.concurrent.Callable;
 
@@ -54,8 +55,8 @@ public class ReverseWords implements Callable<Integer> {
         }
 
         //If there is a valid input file:
-        if(inputFile.exists()) {
-            //Read the input file using a BufferedReader and FileReader
+        if(inputFile != null && inputFile.exists()) {
+            //Read the input file
             BufferedReader reader = new BufferedReader(new FileReader(inputFile, Charset.forName(inputEncoding)));
             //Read the input file line by line
             String line = reader.readLine();
@@ -78,15 +79,16 @@ public class ReverseWords implements Callable<Integer> {
 
         //Write the output to the output file using a buffered writer
         //If there is a valid output file:
-        if(outputFile.exists()) {
-            BufferedWriter writer = new BufferedWriter(new FileWriter(outputFile, Charset.forName(outputEncoding)));
+        if(outputFile != null) {
+            BufferedWriter writer = new BufferedWriter(new FileWriter(outputFile, Charset.forName(outputEncoding))) ;
             writer.write(output);
             writer.close();
             System.out.println("Output file written successfully.");
 
         //If there is no valid output file,  we write to console
         }else {
-            System.out.println("No valid output file specified, printing to console. To avoid this use -o option.");
+            System.out.println("No valid output file specified, printing to console. To avoid this use -o option.\n" + "" +
+                    "#####################################################");
             System.out.println(output);
         }
         return 0;
