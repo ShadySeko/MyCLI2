@@ -39,6 +39,7 @@ reverse -i input.txt -o output.txt
 
 This repository provides a file called test_input.txt that contains text that is not necessarily recognized by all Character encoding formats. Feel free to play around with it, or simply create your own text file and pass it to the command via -i.
 
+This repository also includes a pre-compiled .jar of the CLI, in case you encounter issues with the whole maven stuff. Just use the .jar file in /target to test the command if you encounter any problems.
 
 
 
