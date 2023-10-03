@@ -39,7 +39,7 @@ public class ReverseWords implements Callable<Integer> {
     /**
      * Overriding the call method of the Callable interface, here we
      * implement what our command actually does, i.e. takes an input file,
-     * reverses it's content and writes it to an output file.
+     * reverses its content and writes it to an output file.
      * @return 0 if the command was executed successfully, 1 otherwise
      * @throws Exception
      */
@@ -122,7 +122,9 @@ public class ReverseWords implements Callable<Integer> {
 
 
     public static void main(String... args) {
+        int startTime = (int) System.currentTimeMillis();
         int exitCode = new CommandLine(new ReverseWords()).execute(args);
+        System.out.println("Command exited with exit code: " + exitCode +", executed in " + ((int) System.currentTimeMillis() - startTime) + "ms.");
         System.exit(exitCode);
     }
 
