@@ -16,6 +16,7 @@
               <goal>shade</goal>
             </goals>
             <configuration>
+              <finalName>ReverseWords</finalName>
               <transformers>
                 <transformer>
                   <mainClass>HEIG.ReverseWords</mainClass>
