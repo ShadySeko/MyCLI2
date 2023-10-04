@@ -48,6 +48,8 @@ reverse_replace -i input.txt -o output.txt replace a b
 ```
 To replace all occurences of the character 'a' by 'b' in input.txt
 
+MORE GENERALLY, all input/output files and encoding schemes are given via options (-i, -o, -ie, -oe), while characters for the replace command are given via parameters, so those must go after the command name in the terminal.
+
 
 ## Testing
 
