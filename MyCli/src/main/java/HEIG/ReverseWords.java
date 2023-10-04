@@ -52,91 +52,46 @@ public class ReverseWords implements Callable<Integer> {
             return 1;
         }
 
-        String input = "";
+        String input_f = "";
         if(inputFile == null && outputFile == null){
             System.out.println("Please enter a valid input and output file, use -h for help.");
             return 1;
         }
 
-        if(inputFile != null && inputFile.exists()) {
-            //Read the input file
-            BufferedReader reader = new BufferedReader(new FileReader(inputFile, Charset.forName(inputEncoding)));
-            //Read the input file line by line
-            String line = reader.readLine();
-            input = "";
-            while (line != null) {
-                input += line + "\n";
-                line = reader.readLine();
-            }
-            reader.close();
-            System.out.println("Input file read successfully.");
-        }else {
+       input_f = readFile(inputFile, inputEncoding);
+
+        if(input_f == null){
             System.out.println("Please enter a valid input file, use -i option.");
             return 1;
         }
 
-        String output = replaceChar(input, charToReplace.charAt(0), charToReplaceWith.charAt(0));
-
+        String output = replaceChar(input_f, charToReplace.charAt(0), charToReplaceWith.charAt(0));
         //Write the output to the output file using a buffered writer
-        //If there is a valid output file:
-        if(outputFile != null) {
-            BufferedWriter writer = new BufferedWriter(new FileWriter(outputFile, Charset.forName(outputEncoding))) ;
-            writer.write(output);
-            writer.close();
-            System.out.println("Output file written successfully.");
-
-            //If there is no valid output file,  we write to console
-        }else {
-            System.out.println("No valid output file specified, printing to console. To avoid this use -o option.\n" + "" +
-                    "#####################################################");
-            System.out.println(output);
-        }
-        return 0;
+        return writeFile(outputFile, outputEncoding, output);
     }
 
     @Command(name = "reverse", mixinStandardHelpOptions = true, version = "reverse 1.0",
             description = "Reverses the content of an input file and writes the output to an output file.")
     public Integer reverse() throws IOException {
-            String input = "";
+            String input_f = "";
+
             if(inputFile == null && outputFile == null){
                 System.out.println("Please enter a valid input and output file, use -h for help.");
                 return 1;
             }
 
-            if(inputFile != null && inputFile.exists()) {
-                //Read the input file
-                BufferedReader reader = new BufferedReader(new FileReader(inputFile, Charset.forName(inputEncoding)));
-                //Read the input file line by line
-                String line = reader.readLine();
-                input = "";
-                while (line != null) {
-                    input += line + "\n";
-                    line = reader.readLine();
-                }
-                reader.close();
-                System.out.println("Input file read successfully.");
-            }else {
+            input_f = readFile(inputFile, inputEncoding);
+
+            //Sanity check
+            if(input_f == null){
                 System.out.println("Please enter a valid input file, use -i option.");
                 return 1;
             }
 
-            String output = reverseWords(input);
+            String output = reverseWords(input_f);
 
             //Write the output to the output file using a buffered writer
-            //If there is a valid output file:
-            if(outputFile != null) {
-                BufferedWriter writer = new BufferedWriter(new FileWriter(outputFile, Charset.forName(outputEncoding))) ;
-                writer.write(output);
-                writer.close();
-                System.out.println("Output file written successfully.");
-
-                //If there is no valid output file,  we write to console
-            }else {
-                System.out.println("No valid output file specified, printing to console. To avoid this use -o option.\n" + "" +
-                        "#####################################################");
-                System.out.println(output);
-            }
-            return 0;
+            return writeFile(outputFile, outputEncoding, output);
     }
 
 
@@ -175,7 +130,59 @@ public class ReverseWords implements Callable<Integer> {
         return output;
     }
 
+    /**
+     * This method reads a file with a given encoding and returns its content as a string
+     * @param inputFile
+     * @param inputEncoding
+     * @return input, the content of the file as a string
+     * @throws IOException
+     */
+    private String readFile(File inputFile, String inputEncoding) throws IOException{
+        String input = "";
+        if(inputFile != null && inputFile.exists()) {
+            //Read the input file
+            BufferedReader reader = new BufferedReader(new FileReader(inputFile, Charset.forName(inputEncoding)));
+            //Read the input file line by line
+            String line = reader.readLine();
+            input = "";
+            while (line != null) {
+                input += line + "\n";
+                line = reader.readLine();
+            }
+            reader.close();
+            System.out.println("Input file read successfully.");
+            return input;
+        }else {
+            System.out.println("Please enter a valid input file, use -i option.");
+            return null;
+        }
+    }
 
+    /**
+     * This method writes a string to a file with a given encoding
+     * @param outputFile the file to write to
+     * @param outputEncoding the encoding to use
+     * @param output the string to write
+     * @return 0 if the file was written successfully, 1 otherwise
+     * @throws IOException
+     */
+    private Integer writeFile(File outputFile, String outputEncoding, String output) throws IOException{
+        //Write the output to the output file using a buffered writer
+        //If there is a valid output file:
+        if(outputFile != null) {
+            BufferedWriter writer = new BufferedWriter(new FileWriter(outputFile, Charset.forName(outputEncoding))) ;
+            writer.write(output);
+            writer.close();
+            System.out.println("Output file written successfully.");
+            return 0;
+            //If there is no valid output file,  we write to console
+        }else {
+            System.out.println("No valid output file specified, printing to console. To avoid this use -o option.\n" + "" +
+                    "#####################################################");
+            System.out.println(output);
+            return 0;
+        }
+    }
 
     /**
      * This method reverses a given word
