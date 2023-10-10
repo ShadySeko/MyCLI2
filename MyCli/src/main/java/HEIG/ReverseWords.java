@@ -9,11 +9,8 @@ import picocli.CommandLine.Option;
 import picocli.CommandLine.Parameters;
 
 import java.io.*;
-import java.math.BigInteger;
+
 import java.nio.charset.Charset;
-import java.nio.file.Files;
-import java.nio.file.StandardOpenOption;
-import java.security.MessageDigest;
 import java.util.concurrent.Callable;
 
 
@@ -102,7 +99,7 @@ public class ReverseWords implements Callable<Integer> {
      * implement what our command actually does, i.e. takes an input file,
      * reverses its content and writes it to an output file.
      * @return 0 if the command was executed successfully, 1 otherwise
-     * @throws Exception
+     * @throws Exception Since our class implements Callable, we need to throw an exception
      */
     @Override
     public Integer call() throws Exception {
